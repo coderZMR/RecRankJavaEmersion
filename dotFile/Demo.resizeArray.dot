@@ -1,0 +1,21 @@
+digraph G {
+1 [label="Class.getComponentType" shape=box style=rounded startLine=8 endLine=8]
+2 [label="Array.newInstance" shape=box style=rounded startLine=9 endLine=9]
+3 [label="CONTROL.IF" shape=diamond startLine=11 endLine=13]
+4 [label="Array.getLength" shape=box style=rounded startLine=6 endLine=6]
+5 [label="Math.min" shape=box style=rounded startLine=10 endLine=10]
+6 [label="Object.getClass" shape=box style=rounded startLine=7 endLine=7]
+7 [label="C:#Users#22166#Desktop#wjwase#testtest.java" shape=rounded startLine=-1 endLine=-1]
+1 -> 2 [label=""];
+2 -> 5 [label=""];
+2 -> 3 [label=""];
+4 -> 3 [label=""];
+4 -> 5 [label=""];
+4 -> 2 [label=""];
+4 -> 6 [label=""];
+5 -> 3 [label=""];
+6 -> 5 [label=""];
+6 -> 1 [label=""];
+6 -> 2 [label=""];
+6 -> 3 [label=""];
+}

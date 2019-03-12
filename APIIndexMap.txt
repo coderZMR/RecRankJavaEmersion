@@ -1,0 +1,6 @@
+Class.getComponentType -> 1
+Array.newInstance -> 2
+CONTROL.IF -> 3
+Array.getLength -> 4
+Math.min -> 5
+Object.getClass -> 6
