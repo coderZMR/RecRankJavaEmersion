@@ -20,6 +20,16 @@ public class ConstructGroum {
                    api = api.substring(0,api.length() - 1);
                    if(!api.startsWith("C:#Users#")){
                        String originApi = api;
+                       if(originApi.contains("<")){
+                           if(originApi.contains("<init>")){
+                               originApi = originApi.replaceAll("<init>","chenchichenchi");
+                           }
+                           originApi = originApi.replaceAll("\\<.*?\\>","");
+                           originApi = originApi.replaceAll(">","");
+                           if(originApi.contains("chenchichenchi")){
+                               originApi = originApi.replaceAll("chenchichenchi","<init>");
+                           }
+                       }
                        if(apiMap.containsKey(api)){
                            api = apiMap.get(api);
                        }else{
