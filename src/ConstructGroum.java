@@ -30,6 +30,7 @@ public class ConstructGroum {
                                originApi = originApi.replaceAll("chenchichenchi","<init>");
                            }
                        }
+
                        if(apiMap.containsKey(api)){
                            api = apiMap.get(api);
                        }else{
