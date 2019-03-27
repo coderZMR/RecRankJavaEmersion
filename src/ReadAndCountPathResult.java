@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class ReadAndCountPathResult {
     static Map<String, Integer> PathCounter;
-    public static void readAndCount(File file, File targetFile) throws IOException {
+    public static void readAndCount(File file, PrintWriter targetFilePW) throws IOException {
         PathCounter = new HashMap<>();
         FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -19,20 +19,11 @@ public class ReadAndCountPathResult {
         }
         bufferedReader.close();
         fileReader.close();
-        writePathAndCount(targetFile);
+        writePathAndCount(targetFilePW);
     }
-    private static void writePathAndCount(File file) throws IOException {
-        if (file.exists()) {
-            file.delete();
-        }
-        FileWriter fileWriter = new FileWriter(file, true);
-        PrintWriter pw = new PrintWriter(fileWriter);
+    private static void writePathAndCount(PrintWriter targetFilePW) throws IOException {
         for (String key : PathCounter.keySet()) {
-            pw.println(key + " " + PathCounter.get(key));
+            targetFilePW.println(key + " " + PathCounter.get(key));
         }
-        pw.flush();
-        fileWriter.flush();
-        pw.close();
-        fileWriter.close();
     }
 }

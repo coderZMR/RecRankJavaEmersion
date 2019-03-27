@@ -18,7 +18,7 @@ public class ConstructGroum {
                    String id = strs[0];
                    String api = strs[1].replace("label=\"","");
                    api = api.substring(0,api.length() - 1);
-                   if(!api.startsWith("C:#Users#")){
+                   if(!api.startsWith("/home/x/mydisk/download_high_repos")){
                        String originApi = api;
                        if(originApi.contains("<")){
                            if(originApi.contains("<init>")){
@@ -31,8 +31,8 @@ public class ConstructGroum {
                            }
                        }
 
-                       if(apiMap.containsKey(api)){
-                           api = apiMap.get(api);
+                       if(apiMap.containsKey(originApi)){
+                           api = apiMap.get(originApi);
                        }else{
                            api = Integer.toString(-1);
                        }
@@ -51,16 +51,22 @@ public class ConstructGroum {
                    line = line.replace("[label=\"\"];","");
                    line = line.trim();
                    String[] strs = line.split(" -> ");
-                   String parentNodeId = strs[0];
-                   String childNodeId = strs[1];
-                   groum.addEdge(parentNodeId,childNodeId);
+                   if(strs.length == 2) {
+                       String parentNodeId = strs[0];
+                       String childNodeId = strs[1];
+                       if (groum.getNodeMap().containsKey(parentNodeId) && groum.getNodeMap().containsKey(childNodeId)) {
+                           groum.addEdge(parentNodeId, childNodeId);
+                       }
+                   }
                }
             }
             br.close();
         }catch(Exception e){
             e.printStackTrace();
+            return null;
         }catch (Error e){
             e.printStackTrace();
+            return null;
         }
         return groum;
     }

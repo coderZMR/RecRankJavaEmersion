@@ -33,6 +33,7 @@ public class GetPath {
             getForPath(successorsCopy);
         }
     }
+
     private static void getBackPath(List<String> predecessors) {
         if (predecessors.size() + 1 > threshold)
             return;
@@ -108,15 +109,21 @@ public class GetPath {
         Map<String, GroumNode> nodeMap = targetGraph.getNodeMap();
         for (List<String> sourcePath : source) {
             List<String> apiPath = new ArrayList<String>();
+            boolean canAdd = true;
             for (String id : sourcePath) {
                 if (id.equals("*")) {
                     apiPath.add("*");
                 }
                 else {
-                    apiPath.add(nodeMap.get(id).getApi());
+                    String temp = nodeMap.get(id).getApi();
+                    if (!temp.equals("-1")) apiPath.add(temp);
+                    else {
+                        canAdd = false;
+                        break;
+                    }
                 }
             }
-            pathResult.add(apiPath);
+            if (canAdd) pathResult.add(apiPath);
         }
     }
     public static List<List<String>> getAllPath(Groum groum, List<String> startList, int d) {

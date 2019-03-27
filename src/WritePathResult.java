@@ -4,29 +4,31 @@ import java.util.List;
 import java.util.Map;
 
 public class WritePathResult {
+    private static int count = 0;
 
-    public static void ergodicDir(File dir, File targetFile, Map<String, String> API2IndexMap) throws IOException {
-        if (targetFile.exists()) {
-            targetFile.delete();
-        }
+    public static void ergodicDir(File dir, PrintWriter targetFilePW, Map<String, String> API2IndexMap) throws IOException {
+
         if(dir.isDirectory()){
             for(File file : dir.listFiles()){
                 if(file.isDirectory()){
-                    ergodicDir(file, targetFile, API2IndexMap);
+                    System.out.println("ergodicDir...");
+                    ergodicDir(file, targetFilePW, API2IndexMap);
                 }
                 if(file.isFile() && file.getName().endsWith("dot")){
-                    writePath(file, targetFile, API2IndexMap);
+                    System.out.println("processing " + ++count + " data");
+                    writePath(file, targetFilePW, API2IndexMap);
                 }
             }
         }
         else {
             if(dir.isFile() && dir.getName().endsWith("dot")){
-                writePath(dir, targetFile, API2IndexMap);
+                System.out.println("processing " + ++count + " data");
+                writePath(dir, targetFilePW, API2IndexMap);
             }
         }
     }
 
-    public static void writePath(File groumFile, File targetFile, Map<String, String> API2IndexMap) throws IOException {
+    private static void writePath(File groumFile, PrintWriter targetFilePW, Map<String, String> API2IndexMap) throws IOException {
         ConstructGroum CG = new ConstructGroum();
         Groum groum = CG.constructGroum(groumFile.getAbsolutePath(), API2IndexMap);
         Map<String, GroumNode> nodeMap = groum.getNodeMap();
@@ -35,22 +37,28 @@ public class WritePathResult {
             startList = new ArrayList<>();
             startList.add(id);
             List<List<String>> outList = GetPath.getAllPath(groum, startList, 4);
-            writeFile(outList, targetFile);
+            writeFile(outList, targetFilePW);
         }
     }
 
-    public static void writeFile(List<List<String>> outList, File target) throws IOException {
-        if (!target.exists()) {
-            target.createNewFile();
+    private static String convertListToString(List<String> list) {
+        StringBuilder sB = new StringBuilder();
+        boolean ifStarted = false;
+        for (String item : list) {
+            if (ifStarted) {
+                sB.append(",");
+            }
+            sB.append(item);
+            if (!ifStarted) ifStarted = true;
         }
-        FileWriter fileWriter = new FileWriter(target, true);
-        PrintWriter pw = new PrintWriter(fileWriter);
+        return sB.toString();
+    }
+
+    private static void writeFile(List<List<String>> outList, PrintWriter targetFilePW) throws IOException {
+        String tempStr = null;
         for (List<String> path : outList) {
-            pw.println(path.toString());
+            tempStr = convertListToString(path);
+            targetFilePW.println(tempStr);
         }
-        pw.flush();
-        fileWriter.flush();
-        pw.close();
-        fileWriter.close();
     }
 }

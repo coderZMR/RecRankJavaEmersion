@@ -1,5 +1,7 @@
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 
 public class Main {
@@ -13,10 +15,46 @@ public class Main {
         API2Index = ReadAPI2Index.getAPI2IndexMap(api2index);
         System.out.println("Finish Read API2Index");
         System.out.println("Write Path...");
-        WritePathResult.ergodicDir(dotFile, allPathFile, API2Index);
+        FileWriter fW = null;
+        PrintWriter pW = null;
+
+        fW = getFileWriter(allPathFile);
+        pW = getPrintWriter(fW);
+
+        WritePathResult.ergodicDir(dotFile, pW, API2Index);
+
+        ClosePWFW(pW, fW);
+
         System.out.println("Finish Write Path");
         System.out.println("Read And Count PathResult...");
-        ReadAndCountPathResult.readAndCount(allPathFile, countPathFile);
+
+        fW = getFileWriter(countPathFile);
+        pW = getPrintWriter(fW);
+        ReadAndCountPathResult.readAndCount(allPathFile, pW);
+
+        ClosePWFW(pW, fW);
+
         System.out.println("Finish Read And Count PathResult");
+    }
+
+    private static FileWriter getFileWriter(File file) throws IOException {
+        if (file.exists()) {
+            file.delete();
+        }
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        return new FileWriter(file, true);
+    }
+
+    private static PrintWriter getPrintWriter(FileWriter fW) {
+        return new PrintWriter(fW);
+    }
+
+    private static void ClosePWFW(PrintWriter pW, FileWriter fW) throws IOException {
+        pW.flush();
+        fW.flush();
+        pW.close();
+        fW.close();
     }
 }
