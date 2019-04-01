@@ -4,9 +4,9 @@ import java.util.List;
 
 public class GroumNode implements Serializable {
 
-    private String id;
-    private String api;
-    private String originalApi;
+    private String id;  // 图上节点id
+    private String api; // API在Map中的index
+    private String originalApi; // API名字
     private int startLine;
     private int endLine;
     private List<GroumNode> children = new ArrayList<>();

@@ -105,6 +105,12 @@ public class GetPath {
         target.clear();
         target.addAll(set);
     }
+
+    /**
+     * 将图上的id转为Map中的id
+     * @param pathResult
+     * @param source
+     */
     public static void convert(List<List<String>> pathResult, List<List<String>> source) {
         Map<String, GroumNode> nodeMap = targetGraph.getNodeMap();
         for (List<String> sourcePath : source) {
