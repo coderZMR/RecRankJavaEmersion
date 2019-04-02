@@ -31,13 +31,15 @@ public class WritePathResult {
     private static void writePath(File groumFile, PrintWriter targetFilePW, Map<String, String> API2IndexMap) throws IOException {
         ConstructGroum CG = new ConstructGroum();
         Groum groum = CG.constructGroum(groumFile.getAbsolutePath(), API2IndexMap);
-        Map<String, GroumNode> nodeMap = groum.getNodeMap();
-        List<String> startList = null;
-        for (String id : nodeMap.keySet()) {
-            startList = new ArrayList<>();
-            startList.add(id);
-            List<List<String>> outList = GetPath.getAllPath(groum, startList, 4);
-            writeFile(outList, targetFilePW);
+        if(groum != null) {
+            Map<String, GroumNode> nodeMap = groum.getNodeMap();
+            List<String> startList = null;
+            for (String id : nodeMap.keySet()) {
+                startList = new ArrayList<>();
+                startList.add(id);
+                List<List<String>> outList = GetPath.getAllPath(groum, startList, 4);
+                writeFile(outList, targetFilePW);
+            }
         }
     }
 
