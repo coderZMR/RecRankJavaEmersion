@@ -41,7 +41,7 @@ public class ConstructGroum {
 //                       int startLine = Integer.parseInt(startLineString);
 //                       int endLine = Integer.parseInt(endLineString);
 //                       GroumNode node = new GroumNode(id,api,originApi,startLine,endLine);
-                       if(api.equals("-1")) {
+                       if(!api.equals("-1")) {
                            GroumNode node = new GroumNode(id, api, originApi, -1, -1);
                            groum.addNode(node);
                        }
